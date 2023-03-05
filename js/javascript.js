@@ -66,6 +66,7 @@ const ELECTRONICS = [
     }
   ];
 
+  //взяти всі попередні
 const PRODUCTS = [...FRUITS, ...ELECTRONICS];
 
 //вивести на екран
@@ -73,11 +74,9 @@ const PRODUCTS = [...FRUITS, ...ELECTRONICS];
     let html = '';
     array.forEach((item) => {
       html += `
-      <div class="tabs__content d-none" data-products="2" id="${item.id}"
-      <div class="card">
+    <div class="card" id="${item.id}>
       <h1 class="name_card">${item.name}</h1>
       <p class="price_card">${item.price}</p>
-    </div>
     </div>
       `
     });
@@ -107,8 +106,31 @@ TABS.forEach((tab) => {
     })
 });
 
+//кнопки
 document.addEventListener('DOMContentLoaded', () => {
-    showPostsOnPage('#zernovi', FRUITS)
-    showPostsOnPage('#electronic', ELECTRONICS)
-    showPostsOnPage('#all_products', PRODUCTS)
+showPostsOnPage('#fruits', FRUITS)
+showPostsOnPage('#electronics', ELECTRONICS)
+showPostsOnPage('#all_products', PRODUCTS)
+})
+
+const ABS_BTN = document.querySelector('#abs');
+ABS_BTN.addEventListener('click', () => {
+    const SELECTED_TAB = document.querySelector('.tabs__item.selected');
+    const DATA_ATRIBUTE = SELECTED_TAB.getAttribute('data-id');
+    if (DATA_ATRIBUTE === 'fruits') {
+        FRUITS.sort((a, b) => {
+            return a.price - b.price;
+        });
+        showPostsOnPage('#fruits', FRUITS);
+    }else if (DATA_ATRIBUTE == 'electronics') {
+        ELECTRONICS.sort((a, b) => {
+            return a.price - b.price;
+        });
+        showPostsOnPage('#electronics', ELECTRONICS);
+    }else {
+        PRODUCTS.sort((a, b) => {
+            return a.price - b.price;
+        });
+        showPostsOnPage('#all_products', PRODUCTS);
+    }
 })
